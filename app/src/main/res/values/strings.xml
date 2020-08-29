@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Actividad1Lab</string>
+    <string name="string_name">Nombre</string>
+    <string name="string_password">Contraseña</string>
+    <string name="string_password2">Repetir contraseña</string>
+    <string name="string_email">Email</string>
+    <string name="string_debito">Debito</string>
+    <string name="string_credito">Credito</string>
+    <string name="string_tipodetarjeta">Tipo de tarjeta:</string>
+    <string name="string_fecha">Fecha vencimiento</string>
+    <string name="string_tarjeta">Numero de tarjeta</string>
+    <string name="string_CCV">CCV</string>
+    <string name="string_mes">Mes</string>
+    <string name="string_anio">Año</string>
+    <string name="string_cbu">CBU</string>
+    <string name="string_aliascbu">Alias CBU</string>
+    <string name="string_cargaInicial">Realizar carga inicial?</string>
+    <string name="string_terminos">Acepto los términos y condiciones</string>
+    <string name="string_registrar">REGISTRAR</string>
+
 </resources>
