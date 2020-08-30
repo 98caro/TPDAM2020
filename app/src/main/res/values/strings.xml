@@ -17,5 +17,5 @@
     <string name="string_cargaInicial">Realizar carga inicial?</string>
     <string name="string_terminos">Acepto los términos y condiciones</string>
     <string name="string_registrar">REGISTRAR</string>
-
+    <string name="string_carga">Carga inicial</string>
 </resources>
