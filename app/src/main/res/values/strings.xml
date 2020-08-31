@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Actividad1Lab</string>
+    <string name="app_name">Send Meal</string>
     <string name="string_name">Nombre</string>
     <string name="string_password">Contraseña</string>
     <string name="string_password2">Repetir contraseña</string>

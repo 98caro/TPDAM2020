@@ -1,4 +1,4 @@
-package com.example.actividad1lab;
+package com.faustodavid.sendmeal;
 
 import android.content.Context;
 

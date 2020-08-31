@@ -1,4 +1,4 @@
-package com.example.actividad1lab.model;
+package com.faustodavid.sendmeal.model;
 import java.util.Date;
 
     public class Tarjeta {

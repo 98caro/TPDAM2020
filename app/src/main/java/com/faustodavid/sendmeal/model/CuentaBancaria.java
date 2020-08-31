@@ -1,4 +1,4 @@
-package com.example.actividad1lab.model;
+package com.faustodavid.sendmeal.model;
 
 public class CuentaBancaria {
     private String cbu;
