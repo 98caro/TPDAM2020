@@ -139,7 +139,7 @@
             android:textSize="15dp"
             android:hint="@string/string_mes"
             android:importantForAutofill="no"
-            android:inputType="date"
+            android:inputType="number"
             android:maxLength="2" />
 
         <EditText
@@ -152,7 +152,7 @@
             android:textSize="15dp"
             android:hint="@string/string_anio"
             android:importantForAutofill="no"
-            android:inputType="date"
+            android:inputType="number"
             android:maxLength="4" />
     </LinearLayout>
 
@@ -219,7 +219,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:text="@string/string_registrar"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:background="#FFAA80"
+        android:text="@string/string_registrar" />
 
 </LinearLayout>

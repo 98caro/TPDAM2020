@@ -158,6 +158,11 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
                     valTipo = validacionTipo(debito,credito);
+                    if(debito.isChecked()) {
+                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                            valFecha = validacionFechaDebito(mes, anio);
+                        }
+                    }
                 }
             }
         });
@@ -167,6 +172,11 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
             {
                 valTipo = validacionTipo(debito,credito);
+                if(debito.isChecked()) {
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaDebito(mes, anio);
+                    }
+                }
             }
         });
 
@@ -175,6 +185,11 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
                     valTipo = validacionTipo(debito,credito);
+                    if(credito.isChecked()) {
+                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                            valFecha = validacionFechaCredito(mes, anio);
+                        }
+                    }
                 }
             }
         });
@@ -184,6 +199,11 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
             {
                 valTipo = validacionTipo(debito,credito);
+                if(credito.isChecked()) {
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaCredito(mes, anio);
+                    }
+                }
             }
         });
 
@@ -243,11 +263,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 valMes = validacionNulo(mes) && validacionMes(mes);
+                if(credito.isChecked()) {
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaCredito(mes, anio);
+                    }
+                } else if(debito.isChecked()){
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaDebito(mes, anio);
+                    }
+                }
                 }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 valMes = validacionNulo(mes) && validacionMes(mes);
+                if(credito.isChecked()) {
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaCredito(mes, anio);
+                    }
+                } else if(debito.isChecked()){
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaDebito(mes, anio);
+                    }
+                }
             }
         });
 
@@ -256,6 +294,15 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     valMes = validacionNulo(mes) && validacionMes(mes);
+                    if(credito.isChecked()) {
+                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                            valFecha = validacionFechaCredito(mes, anio);
+                        }
+                    } else if(debito.isChecked()){
+                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                            valFecha = validacionFechaDebito(mes, anio);
+                        }
+                    }
                 }}});
 
         anio.addTextChangedListener(new TextWatcher() {
@@ -267,11 +314,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 valAnio = validacionNulo(anio);
+                if(credito.isChecked()) {
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaCredito(mes, anio);
+                    }
+                } else if(debito.isChecked()){
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaDebito(mes, anio);
+                    }
+                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 valAnio = validacionNulo(anio);
+                if(credito.isChecked()) {
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaCredito(mes, anio);
+                    }
+                } else if(debito.isChecked()){
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaDebito(mes, anio);
+                    }
+                }
             }
         });
 
@@ -280,6 +345,15 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     valAnio = validacionNulo(anio);
+                    if(credito.isChecked()) {
+                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                            valFecha = validacionFechaCredito(mes, anio);
+                        }
+                    } else if(debito.isChecked()){
+                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                            valFecha = validacionFechaDebito(mes, anio);
+                        }
+                    }
                 }
             }
         });
@@ -334,8 +408,15 @@ public class MainActivity extends AppCompatActivity {
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0 ) {
-                    valFecha = validacionFecha(mes, anio);
+                if(credito.isChecked()) {
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaCredito(mes, anio);
+                    }
+                }
+                else if(debito.isChecked()){
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFechaDebito(mes, anio);
+                    }
                 }
                 valCarga = validacionCarga();
                 valTipo = validacionTipo(debito,credito);
@@ -388,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
         return valMes;
     }
 
-    private boolean validacionFecha(EditText inputmes, EditText inputanio){
+    private boolean validacionFechaCredito(EditText inputmes, EditText inputanio){
         boolean valFecha;
         DateFormat formato = new SimpleDateFormat("MM-yyyy");
         String fechaIngresadaStr = inputmes.getText().toString()+"-"+inputanio.getText().toString();
@@ -408,13 +489,44 @@ public class MainActivity extends AppCompatActivity {
         calIngresada.setTime(fechaIngresada);
 
         if (calIngresada.before(calActual)){
-            inputanio.setError("La fecha de vencimiento ingresada expiró");
-            inputmes.setError("La fecha de vencimiento ingresada expiró");
+            inputanio.setError("La fecha de vencimiento ingresada debe ser superior a los próximos 3 meses");
+            inputmes.setError("La fecha de vencimiento ingresada debe ser superior a los próximos 3 meses");
             valFecha=false;
         } else {
+            inputanio.setError(null);
+            inputmes.setError(null);
             valFecha=true;
         }
 
+        return valFecha;
+    }
+    private boolean validacionFechaDebito(EditText inputmes, EditText inputanio) {
+        boolean valFecha;
+        DateFormat formato = new SimpleDateFormat("MM-yyyy");
+        String fechaIngresadaStr = inputmes.getText().toString() + "-" + inputanio.getText().toString();
+        Date fechaIngresada = null;
+        try {
+            fechaIngresada = formato.parse(fechaIngresadaStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar calActual = Calendar.getInstance();
+        Date fechaActual = new Date();
+        calActual.setTime(fechaActual);
+
+        Calendar calIngresada = Calendar.getInstance();
+        calIngresada.setTime(fechaIngresada);
+
+        if (calIngresada.before(calActual)) {
+            inputanio.setError("La fecha de vencimiento debe ser superior a la fecha actual.");
+            inputmes.setError("La fecha de vencimiento debe ser superior a la fecha actual.");
+            valFecha = false;
+        } else {
+            inputanio.setError(null);
+            inputmes.setError(null);
+            valFecha = true;
+        }
         return valFecha;
     }
 
