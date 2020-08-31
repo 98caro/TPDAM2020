@@ -77,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
                 valClave = validacionNulo(clave);
             }
         });
+        //Listener focus en password 1
+        clave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    valClave = validacionNulo(clave);
+                }
+            }
+        });
 
         //Listener cambio de texto en password 2
         claveRep.addTextChangedListener(new TextWatcher() {
@@ -101,17 +110,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //Listener focus en password 1
-        clave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    valClave = validacionNulo(clave);
-                }
-            }
-        });
-
         //Listener focus en password 2
         claveRep.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -129,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Listener cambio de texto en email
         email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 valEmail = validacionNulo(email) && validacionEmail(email);
             }
         });
-
+        //Listener focus en email
         email.setOnFocusChangeListener(new View.OnFocusChangeListener() { //Listener focus en email
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -153,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     valEmail = validacionNulo(email) && validacionEmail(email);
                 }}});
 
+        //Listener focus en tipo debito
         debito.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //Listener checked en tipo debito
         debito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Listener focus en tipo credito
         credito.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //Listener checked en tipo credito
         credito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
@@ -207,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Listener cambio de texto en tarjeta
         tarjeta.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -223,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 valTarjeta = validacionNulo(tarjeta);
             }
         });
-
+        //Listener focus en tarjeta
         tarjeta.setOnFocusChangeListener(new View.OnFocusChangeListener() { //Listener focus en email
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -231,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                     valTarjeta = validacionNulo(tarjeta);
                 }}});
 
+        //Listener cambio de texto en CCV
         CCV.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -247,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                 valCCV = validacionNulo(CCV);
             }
         });
-
+        //Listener focus en CCV
         CCV.setOnFocusChangeListener(new View.OnFocusChangeListener() { //Listener focus en email
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -255,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
                     valCCV = validacionNulo(CCV);
                 }}});
 
+        //Listener cambio de texto en mes
         mes.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -288,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //Listener focus en mes
         mes.setOnFocusChangeListener(new View.OnFocusChangeListener() { //Listener focus en email
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -305,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }}});
 
+        //Listener cambio de texto en año
         anio.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -339,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //Listener focus en año
         anio.setOnFocusChangeListener(new View.OnFocusChangeListener() { //Listener focus en email
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -358,6 +363,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Listener del botón switch de carga inicial
         switchCarga.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -373,6 +379,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Listener del cambio en seekbar
         cantidadCarga.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -393,6 +400,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Listener del botón de los términos y condiciones
         terminos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -405,6 +413,7 @@ public class MainActivity extends AppCompatActivity {
             }
             });
 
+        //Listener del botón de registro
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
