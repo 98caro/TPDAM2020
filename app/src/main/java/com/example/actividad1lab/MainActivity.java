@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textoCarga;
     EditText clave, claveRep, email, tarjeta, CCV, mes, anio, CBU, aliasCBU;
     boolean valClave, valClaveRep, valEmail, valTarjeta, valCCV, valMes, valAnio, valCBU, valAliasCBU, valCarga;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }); //Listener cambio de texto en password 1
+
         claveRep.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -130,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         claveRep.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {  //Listener focus en password 2
