@@ -34,9 +34,9 @@ import java.util.regex.Pattern;
 import static java.time.LocalDate.now;
 
 public class MainActivity extends AppCompatActivity {
-    Switch switchCarga; //Defino el switch
-    SeekBar cantidadCarga; //Defino el seekbar
-    CheckBox terminos; //Defino el checkbox
+    Switch switchCarga;
+    SeekBar cantidadCarga;
+    CheckBox terminos;
     Button registrar;
     TextView textoCarga;
     RadioButton debito, credito;
