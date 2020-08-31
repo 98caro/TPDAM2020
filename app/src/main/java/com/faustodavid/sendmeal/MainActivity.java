@@ -480,7 +480,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean validacionFechaCredito(EditText inputmes, EditText inputanio){
         boolean valFecha;
-        DateFormat formato = new SimpleDateFormat("MM-yyyy");
+        DateFormat formato = new SimpleDateFormat("MM-yy");
         String fechaIngresadaStr = inputmes.getText().toString()+"-"+inputanio.getText().toString();
         Date fechaIngresada = null;
         try {
@@ -511,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private boolean validacionFechaDebito(EditText inputmes, EditText inputanio) {
         boolean valFecha;
-        DateFormat formato = new SimpleDateFormat("MM-yyyy");
+        DateFormat formato = new SimpleDateFormat("MM-yy");
         String fechaIngresadaStr = inputmes.getText().toString() + "-" + inputanio.getText().toString();
         Date fechaIngresada = null;
         try {
