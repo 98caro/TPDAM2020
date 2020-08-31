@@ -10,48 +10,54 @@
     <EditText
         android:id="@+id/nombre"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
         android:ems="10"
         android:hint="@string/string_name"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:importantForAutofill="no" />
+        android:textSize="15dp" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
         android:ems="10"
         android:hint="@string/string_password"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
-        android:importantForAutofill="no" />
+        android:textSize="15dp" />
 
     <EditText
         android:id="@+id/password2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:ems="10"
         android:hint="@string/string_password2"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
-        android:importantForAutofill="no" />
+        android:textSize="15dp" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:ems="10"
         android:hint="@string/string_email"
+        android:importantForAutofill="no"
         android:inputType="textEmailAddress"
-        android:importantForAutofill="no" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="14dp" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/labelTarjeta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/string_tipodetarjeta" />
+        android:layout_margin="5dp"
+        android:text="@string/string_tipodetarjeta"
+        android:textSize="12dp" />
 
     <RadioGroup
         android:id="@+id/tipoTarjeta"
@@ -63,58 +69,61 @@
             android:id="@+id/debito"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
-            android:text="@string/string_debito" />
+            android:text="@string/string_debito"
+            android:textSize="13dp" />
 
         <RadioButton
             android:id="@+id/credito"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
-            android:text="@string/string_credito" />
+            android:text="@string/string_credito"
+            android:textSize="13dp" />
 
     </RadioGroup>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="17dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/numeroTarjeta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="3dp"
             android:ems="10"
             android:hint="@string/string_tarjeta"
-            android:maxLength="18"
+            android:importantForAutofill="no"
             android:inputType="number"
-            android:importantForAutofill="no" />
+            android:maxLength="18"
+            android:textSize="15dp" />
 
         <EditText
             android:id="@+id/numeroCCV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="3dp"
             android:ems="10"
             android:hint="@string/string_CCV"
-            android:maxLength="3"
+            android:importantForAutofill="no"
             android:inputType="number"
-            android:importantForAutofill="no" />
+            android:maxLength="3"
+            android:textSize="15dp" />
 
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="17dp" />
 
     <TextView
         android:id="@+id/labelFecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/string_fecha" />
+        android:layout_margin="5dp"
+        android:text="@string/string_fecha"
+        android:textSize="12dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -125,69 +134,73 @@
             android:id="@+id/mes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:ems="10"
+            android:textSize="15dp"
             android:hint="@string/string_mes"
-            android:maxLength="2"
+            android:importantForAutofill="no"
             android:inputType="date"
-            android:importantForAutofill="no" />
+            android:maxLength="2" />
 
         <EditText
             android:id="@+id/anio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:ems="10"
+            android:textSize="15dp"
             android:hint="@string/string_anio"
-            android:maxLength="4"
+            android:importantForAutofill="no"
             android:inputType="date"
-            android:importantForAutofill="no" />
+            android:maxLength="4" />
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="17dp" />
 
     <EditText
         android:id="@+id/CBU"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:ems="10"
-        android:maxLength="22"
-        android:inputType="number"
         android:hint="@string/string_cbu"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:maxLength="22"
+        android:textSize="15dp" />
 
     <EditText
         android:id="@+id/aliasCBU"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:ems="10"
-        android:maxLength="20"
-        android:inputType="textPersonName"
         android:hint="@string/string_aliascbu"
-        android:importantForAutofill="no" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="17dp" />
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:maxLength="20"
+        android:textSize="15dp" />
 
     <Switch
         android:id="@+id/cargaInicial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/string_cargaInicial" />
+        android:layout_margin="3dp"
+        android:text="@string/string_cargaInicial"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
         android:id="@+id/textoCarga"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/string_carga"
+        android:textSize="12dp"
         android:visibility="gone" />
 
     <SeekBar
         android:id="@+id/barraCarga"
         android:layout_width="365dp"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:max="1500"
         android:visibility="gone"
         tools:visibility="gone" />
@@ -196,12 +209,16 @@
         android:id="@+id/terminos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/string_terminos" />
+        android:layout_margin="3dp"
+        android:text="@string/string_terminos"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <Button
         android:id="@+id/registrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/string_registrar" />
+        android:layout_margin="3dp"
+        android:text="@string/string_registrar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </LinearLayout>

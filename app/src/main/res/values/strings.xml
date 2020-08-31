@@ -14,7 +14,7 @@
     <string name="string_anio">Año</string>
     <string name="string_cbu">CBU</string>
     <string name="string_aliascbu">Alias CBU</string>
-    <string name="string_cargaInicial">Realizar carga inicial?</string>
+    <string name="string_cargaInicial">¿Realizar carga inicial?</string>
     <string name="string_terminos">Acepto los términos y condiciones</string>
     <string name="string_registrar">REGISTRAR</string>
     <string name="string_carga">Carga inicial</string>

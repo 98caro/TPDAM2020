@@ -2,6 +2,7 @@ package com.faustodavid.sendmeal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -292,6 +293,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     cantidadCarga.setVisibility(View.GONE);
                     textoCarga.setVisibility(View.GONE);
+                    switchCarga.setText(R.string.string_cargaInicial);
+                    switchCarga.setTextColor(R.id.cargaInicial);
                 }
             }
         });
@@ -302,12 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 int val = (i * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
                 textoCarga.setX(val);
                 textoCarga.setText(String.valueOf(i));
-                if (i > 0 && switchCarga.isChecked()){
-                    valCarga = true;
-                }
-                else{
-                    valCarga = false;
-                }
+                valCarga = validacionCarga();
             }
 
             @Override
@@ -339,6 +337,7 @@ public class MainActivity extends AppCompatActivity {
                 if(mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0 ) {
                     valFecha = validacionFecha(mes, anio);
                 }
+                valCarga = validacionCarga();
                 valTipo = validacionTipo(debito,credito);
                 if (valClave && valClaveRep && valEmail && valTipo && valTarjeta && valCCV && valMes && valAnio && valFecha && valCarga) {
                     Toast registroCorrecto = Toast.makeText(getApplicationContext(), "Registro correcto", Toast.LENGTH_SHORT);
@@ -437,6 +436,24 @@ public class MainActivity extends AppCompatActivity {
         return valTipo;
     }
 
+    private boolean validacionCarga(){
+        if(switchCarga.isChecked()) {
+            if (cantidadCarga.getProgress() > 0) {
+                switchCarga.setText(R.string.string_cargaInicial);
+                switchCarga.setTextColor(R.id.cargaInicial);
+                return true;
+            } else {
+                switchCarga.setText("El monto seleccionado debe ser mayor a 0 pesos");
+                switchCarga.setTextColor(Color.RED);
+                return false;
+            }
+        }
+        else {
+            switchCarga.setError(null);
+            return true;
+        }
+    }
+
     private void validacionesDefault(){
         validacionNulo(clave);
         validacionNulo(claveRep);
@@ -446,5 +463,6 @@ public class MainActivity extends AppCompatActivity {
         validacionNulo(CCV);
         validacionNulo(mes);
         validacionNulo(anio);
+        validacionCarga();
     }
 }
