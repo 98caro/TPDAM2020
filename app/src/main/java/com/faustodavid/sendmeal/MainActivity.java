@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
                     cantidadCarga.setVisibility(View.GONE);
                     textoCarga.setVisibility(View.GONE);
                     switchCarga.setText(R.string.string_cargaInicial);
-                    switchCarga.setTextColor(R.id.cargaInicial);
+                    switchCarga.setTextColor(Color.BLACK);
                 }
             }
         });
@@ -440,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
         if(switchCarga.isChecked()) {
             if (cantidadCarga.getProgress() > 0) {
                 switchCarga.setText(R.string.string_cargaInicial);
-                switchCarga.setTextColor(R.id.cargaInicial);
+                switchCarga.setTextColor(Color.BLACK);
                 return true;
             } else {
                 switchCarga.setText("El monto seleccionado debe ser mayor a 0 pesos");
