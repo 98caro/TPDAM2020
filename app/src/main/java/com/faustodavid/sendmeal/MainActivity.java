@@ -3,8 +3,12 @@ package com.faustodavid.sendmeal;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +21,8 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup tipoTarjeta;
     EditText clave, claveRep, email, tarjeta, CCV, mes, anio, CBU, aliasCBU;
     boolean valClave = false, valClaveRep = false, valEmail = false, valTipo=false, valTarjeta = false, valCCV = false, valMes = false, valAnio = false, valFecha = false, valCBU, valAliasCBU, valCarga = false;
+    TextView labelFecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         credito = findViewById(R.id.credito);
         tarjeta = findViewById(R.id.numeroTarjeta);
         CCV = findViewById(R.id.numeroCCV);
+        labelFecha = findViewById(R.id.labelFecha);
         mes = findViewById(R.id.mes);
         anio = findViewById(R.id.anio);
         registrar = findViewById(R.id.registrar);
@@ -266,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                valMes = validacionNulo(mes) && validacionMes(mes);
+                valMes = validacionMes(mes);
                 if(credito.isChecked()) {
                     if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
                         valFecha = validacionFechaCredito(mes, anio);
@@ -280,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                valMes = validacionNulo(mes) && validacionMes(mes);
+                valMes = validacionMes(mes);
                 if(credito.isChecked()) {
                     if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
                         valFecha = validacionFechaCredito(mes, anio);
@@ -297,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    valMes = validacionNulo(mes) && validacionMes(mes);
+                    valMes = validacionMes(mes);
                     if(credito.isChecked()) {
                         if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
                             valFecha = validacionFechaCredito(mes, anio);
@@ -375,6 +383,7 @@ public class MainActivity extends AppCompatActivity {
                     textoCarga.setVisibility(View.GONE);
                     switchCarga.setText(R.string.string_cargaInicial);
                     switchCarga.setTextColor(Color.BLACK);
+                    switchCarga.setTypeface(null, Typeface.NORMAL);
                 }
             }
         });
@@ -447,7 +456,7 @@ public class MainActivity extends AppCompatActivity {
             input.setError("Este es un campo obligatorio");
             nulo = false;
         } else {
-            clave.setError(null);
+            input.setError(null);
             nulo = true;
         }
         return nulo;
@@ -466,14 +475,22 @@ public class MainActivity extends AppCompatActivity {
         return valEmail;
     }
 
-    private boolean validacionMes(EditText input){
+    private boolean validacionMes(EditText input) {
         boolean valMes;
-        if(Integer.parseInt(input.getText().toString()) > 12){
-            input.setError("Ingrese un mes válido.");
-            valMes=false;
-        }else{
-            input.setError(null);
-            valMes=true;
+        if (input.getText().toString().length() <= 0) {
+            input.setError("Este es un campo obligatorio");
+            valMes = false;
+        } else {
+            int Min = 1;
+            int Max = 12;
+            int inputToInt = Integer.parseInt(input.getText().toString());
+            if (inputToInt >= Min && inputToInt <= Max) {
+                valMes=true;
+            } else {
+                input.setError("El número debe encontrarse entre 1 y 12");
+                input.setText(input.getText().toString().substring(0, input.getText().toString().length()-1));
+                valMes = false;
+            }
         }
         return valMes;
     }
@@ -498,12 +515,14 @@ public class MainActivity extends AppCompatActivity {
         calIngresada.setTime(fechaIngresada);
 
         if (calIngresada.before(calActual)){
-            inputanio.setError("La fecha de vencimiento ingresada debe ser superior a los próximos 3 meses");
-            inputmes.setError("La fecha de vencimiento ingresada debe ser superior a los próximos 3 meses");
+            labelFecha.setText("La fecha de vencimiento ingresada debe ser superior a los próximos 3 meses");
+            labelFecha.setTextColor(Color.RED);
+            labelFecha.setTypeface(null, Typeface.BOLD);
             valFecha=false;
         } else {
-            inputanio.setError(null);
-            inputmes.setError(null);
+            labelFecha.setText(R.string.string_fecha);
+            labelFecha.setTextColor(Color.BLACK);
+            labelFecha.setTypeface(null, Typeface.NORMAL);
             valFecha=true;
         }
 
@@ -528,12 +547,14 @@ public class MainActivity extends AppCompatActivity {
         calIngresada.setTime(fechaIngresada);
 
         if (calIngresada.before(calActual)) {
-            inputanio.setError("La fecha de vencimiento debe ser superior a la fecha actual.");
-            inputmes.setError("La fecha de vencimiento debe ser superior a la fecha actual.");
+            labelFecha.setText("La fecha de vencimiento debe ser superior a la fecha actual.");
+            labelFecha.setTextColor(Color.RED);
+            labelFecha.setTypeface(null, Typeface.BOLD);
             valFecha = false;
         } else {
-            inputanio.setError(null);
-            inputmes.setError(null);
+            labelFecha.setText(R.string.string_fecha);
+            labelFecha.setTextColor(Color.BLACK);
+            labelFecha.setTypeface(null, Typeface.NORMAL);
             valFecha = true;
         }
         return valFecha;
@@ -562,10 +583,12 @@ public class MainActivity extends AppCompatActivity {
             if (cantidadCarga.getProgress() > 0) {
                 switchCarga.setText(R.string.string_cargaInicial);
                 switchCarga.setTextColor(Color.BLACK);
+                switchCarga.setTypeface(null, Typeface.NORMAL);
                 return true;
             } else {
                 switchCarga.setText("El monto seleccionado debe ser mayor a 0 pesos");
                 switchCarga.setTextColor(Color.RED);
+                switchCarga.setTypeface(null, Typeface.BOLD);
                 return false;
             }
         }

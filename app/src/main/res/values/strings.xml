@@ -7,7 +7,7 @@
     <string name="string_debito">Débito</string>
     <string name="string_credito">Crédito</string>
     <string name="string_tipodetarjeta">Tipo de tarjeta:</string>
-    <string name="string_fecha">Fecha de vencimiento:</string>
+    <string name="string_fecha">Fecha de vencimiento (MM/YY):</string>
     <string name="string_tarjeta">Número de tarjeta</string>
     <string name="string_CCV">CCV</string>
     <string name="string_mes">Mes</string>
