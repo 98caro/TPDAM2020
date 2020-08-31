@@ -3,6 +3,7 @@ package com.example.actividad1lab;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,12 +16,14 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
     Button registrar;
     TextView textoCarga;
     EditText clave, claveRep, email, tarjeta, CCV, mes, anio, CBU, aliasCBU;
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    boolean valClave, valClaveRep, valEmail, valTarjeta, valCCV, valMes, valAnio, valCBU, valAliasCBU, valCarga;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         tarjeta = findViewById(R.id.numeroTarjeta);
         CCV = findViewById(R.id.numeroCCV);
+        mes = findViewById(R.id.mes);
+        anio = findViewById(R.id.anio);
+        registrar = findViewById(R.id.registrar);
         registrar.setEnabled(false);
 
         clave.addTextChangedListener(new TextWatcher() {
@@ -63,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (clave.getText().toString().length() <= 0) {
                     clave.setError("Este es un campo obligatorio");
+                    valClave = false;
                 } else {
                     clave.setError(null);
+                    valClave = true;
                 }
             }
 
@@ -72,8 +79,10 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (clave.getText().toString().length() <= 0) {
                     clave.setError("Este es un campo obligatorio");
+                    valClave = false;
                 } else {
                     clave.setError(null);
+                    valClave = true;
                 }
 
             }
@@ -88,8 +97,10 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!claveRep.getText().toString().equals(clave.getText().toString())) {
                     claveRep.setError("Las contraseñas no coinciden");
+                    valClaveRep = false;
                 } else {
                     claveRep.setError(null);
+                    valClaveRep = true;
                 }
             }
 
@@ -97,8 +108,10 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (!claveRep.getText().toString().equals(clave.getText().toString())) {
                     claveRep.setError("Las contraseñas no coinciden");
+                    valClaveRep = false;
                 } else {
                     claveRep.setError(null);
+                    valClaveRep = true;
                 }
             }
         }); //Listener cambio de texto en password 2
@@ -109,8 +122,10 @@ public class MainActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     if (clave.getText().toString().length() <= 0) {
                         clave.setError("Este es un campo obligatorio");
+                        valClave = false;
                     } else {
                         clave.setError(null);
+                        valClave = true;
                     }
                 }
             }
@@ -121,13 +136,17 @@ public class MainActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     if (claveRep.getText().toString().length() <= 0) {
                         claveRep.setError("Este es un campo obligatorio");
+                        valClaveRep = false;
                     } else {
                         claveRep.setError(null);
+                        valClaveRep = true;
                     }
                     if (!claveRep.getText().toString().equals(clave.getText().toString())) {
                         claveRep.setError("Las contraseñas no coinciden");
+                        valClaveRep = false;
                     } else {
                         claveRep.setError(null);
+                        valClaveRep = true;
                     }
                 }
             }
@@ -143,8 +162,10 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (clave.getText().toString().length() <= 0) {
                     clave.setError("Este es un campo obligatorio");
+                    valClave = false;
                 } else {
                     clave.setError(null);
+                    valClave = true;
                 }
             }
 
@@ -152,12 +173,15 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (email.getText().toString().length() <= 0) {
                     email.setError("Este es un campo obligatorio");
+                    valEmail = false;
                 } else {
                     String cantLetras = email.getText().toString().substring(email.getText().toString().indexOf("@")+1);
                     if (email.getText().toString().trim().contains("@") && cantLetras.length() >= 3){
                         email.setError(null);
-                    }else{
-                    email.setError("Ingrese un correo electrónico válido");
+                        valEmail = true;
+                    } else {
+                        email.setError("Ingrese un correo electrónico válido");
+                        valEmail = false;
                     }
                 }
             }
@@ -169,12 +193,15 @@ public class MainActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     if (email.getText().toString().length() <= 0) {
                         email.setError("Este es un campo obligatorio");
+                        valEmail = false;
                     } else {
                         String cantLetras = email.getText().toString().substring(email.getText().toString().indexOf("@") + 1);
                         if (email.getText().toString().trim().contains("@") && cantLetras.length() >= 3) {
                             email.setError(null);
+                            valEmail = true;
                         } else {
                             email.setError("Ingrese un correo electrónico válido");
+                            valEmail = false;
                         }
                     }
                 }}});
@@ -187,10 +214,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (clave.getText().toString().length() <= 0) {
-                    clave.setError("Este es un campo obligatorio");
+                if (tarjeta.getText().toString().length() <= 0) {
+                    tarjeta.setError("Este es un campo obligatorio");
+                    valTarjeta=false;
                 } else {
-                    clave.setError(null);
+                    tarjeta.setError(null);
+                    valTarjeta=true;
                 }
             }
 
@@ -198,8 +227,10 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (tarjeta.getText().toString().length() <= 0) {
                     tarjeta.setError("Este es un campo obligatorio");
+                    valTarjeta=false;
                 } else {
                     tarjeta.setError(null);
+                    valTarjeta=true;
                 }
             }
         });
@@ -210,8 +241,10 @@ public class MainActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     if (tarjeta.getText().toString().length() <= 0) {
                         tarjeta.setError("Este es un campo obligatorio");
+                        valTarjeta=false;
                     } else {
                         tarjeta.setError(null);
+                        valTarjeta=true;
                     }
                 }}});
 
@@ -223,10 +256,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (clave.getText().toString().length() <= 0) {
-                    clave.setError("Este es un campo obligatorio");
+                if (CCV.getText().toString().length() <= 0) {
+                    CCV.setError("Este es un campo obligatorio");
+                    valCCV=false;
                 } else {
-                    clave.setError(null);
+                    CCV.setError(null);
+                    valCCV=true;
                 }
             }
 
@@ -234,8 +269,10 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (CCV.getText().toString().length() <= 0) {
                     CCV.setError("Este es un campo obligatorio");
+                    valCCV=false;
                 } else {
                     CCV.setError(null);
+                    valCCV=true;
                 }
             }
         });
@@ -246,8 +283,10 @@ public class MainActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     if (CCV.getText().toString().length() <= 0) {
                         CCV.setError("Este es un campo obligatorio");
+                        valCCV=false;
                     } else {
                         CCV.setError(null);
+                        valCCV=true;
                     }
                 }}});
 
@@ -259,10 +298,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (clave.getText().toString().length() <= 0) {
-                    clave.setError("Este es un campo obligatorio");
+                if (mes.getText().toString().length() <= 0) {
+                    mes.setError("Este es un campo obligatorio");
+                    valMes=false;
                 } else {
-                    clave.setError(null);
+                    mes.setError(null);
+                    valMes=true;
                 }
             }
 
@@ -270,8 +311,10 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (mes.getText().toString().length() <= 0) {
                     mes.setError("Este es un campo obligatorio");
+                    valMes=false;
                 } else {
                     mes.setError(null);
+                    valMes=true;
                 }
             }
         });
@@ -282,8 +325,10 @@ public class MainActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     if (mes.getText().toString().length() <= 0) {
                         mes.setError("Este es un campo obligatorio");
+                        valMes=false;
                     } else {
                         mes.setError(null);
+                        valMes=true;
                     }
                 }}});
 
@@ -295,10 +340,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (clave.getText().toString().length() <= 0) {
-                    clave.setError("Este es un campo obligatorio");
+                if (anio.getText().toString().length() <= 0) {
+                    anio.setError("Este es un campo obligatorio");
+                    valAnio=false;
                 } else {
-                    clave.setError(null);
+                    anio.setError(null);
+                    valAnio=true;
                 }
             }
 
@@ -306,8 +353,10 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (anio.getText().toString().length() <= 0) {
                     anio.setError("Este es un campo obligatorio");
+                    valAnio=false;
                 } else {
                     anio.setError(null);
+                    valAnio=true;
                 }
             }
         });
@@ -318,8 +367,31 @@ public class MainActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     if (anio.getText().toString().length() <= 0) {
                         anio.setError("Este es un campo obligatorio");
+                        valAnio=false;
                     } else {
-                            anio.setError(null);
+                        anio.setError(null);
+                        valAnio=true;
+                       /* if(Integer.parseInt(mes.toString()) > 12){
+                            Toast toast2 = Toast.makeText(getApplicationContext(), "Fecha invalida", Toast.LENGTH_SHORT);
+                            toast2.show();
+                        }
+                        else {
+                            SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+                            String dateInString = mes.toString() + anio.toString();
+                            Date fechaIngresada = null;
+                            {
+                                try {
+                                    fechaIngresada = formatter.parse(dateInString);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            Date date = new Date();
+                            if (fechaIngresada.compareTo(date) > 0){
+                                Toast toast1 = Toast.makeText(getApplicationContext(), "Fecha ingresada mayor a la actual", Toast.LENGTH_SHORT);
+                                toast1.show();
+                            }
+                        } */
                     }
                 }}});
 
@@ -337,12 +409,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         cantidadCarga.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                                                     @Override
-                                                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                                                         int val = (i * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
-                                                         textoCarga.setX(val);
-                                                         textoCarga.setText(String.valueOf(i));
-                                                     }
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                int val = (i * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
+                textoCarga.setX(val);
+                textoCarga.setText(String.valueOf(i));
+                if (i > 0){
+                    valCarga = true;
+                }
+                else{
+                    valCarga = false;
+                }
+            }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -367,5 +445,18 @@ public class MainActivity extends AppCompatActivity {
             }
             });
 
+
+        registrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (valClave && valCarga && valClaveRep && valEmail && valTarjeta && valCCV && valMes && valAnio) {
+                    Toast toast1 = Toast.makeText(getApplicationContext(), "Registro correcto", Toast.LENGTH_SHORT);
+                    toast1.show();
+                } else {
+                    Toast toast2 = Toast.makeText(getApplicationContext(), "Registro incorrecto. Revise los datos ingresados", Toast.LENGTH_SHORT);
+                    toast2.show();
+                }
+            }
+        });
     }
 }

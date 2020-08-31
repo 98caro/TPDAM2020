@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/string_name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/password"
@@ -21,7 +22,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/string_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/password2"
@@ -29,7 +31,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/string_password2"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/email"
@@ -37,7 +40,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/string_email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:importantForAutofill="no" />
 
     <Space
         android:layout_width="match_parent"
@@ -86,7 +90,8 @@
             android:ems="10"
             android:hint="@string/string_tarjeta"
             android:maxLength="18"
-            android:inputType="number" />
+            android:inputType="number"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/numeroCCV"
@@ -95,12 +100,9 @@
             android:ems="10"
             android:hint="@string/string_CCV"
             android:maxLength="3"
-            android:inputType="number" />
+            android:inputType="number"
+            android:importantForAutofill="no" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"></LinearLayout>
     </LinearLayout>
 
     <Space
@@ -125,17 +127,19 @@
             android:ems="10"
             android:hint="@string/string_mes"
             android:maxLength="2"
-            android:inputType="number" />
+            android:inputType="number"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/anio"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/string_anio"
             android:maxLength="4"
-            android:inputType="number" />
+            android:inputType="number"
+            android:importantForAutofill="no" />
     </LinearLayout>
 
     <Space
@@ -149,7 +153,8 @@
         android:ems="10"
         android:maxLength="22"
         android:inputType="number"
-        android:hint="@string/string_cbu"/>
+        android:hint="@string/string_cbu"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/aliasCBU"
@@ -158,7 +163,8 @@
         android:ems="10"
         android:maxLength="20"
         android:inputType="textPersonName"
-        android:hint="@string/string_aliascbu" />
+        android:hint="@string/string_aliascbu"
+        android:importantForAutofill="no" />
 
     <Space
         android:layout_width="match_parent"
