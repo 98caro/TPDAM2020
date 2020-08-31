@@ -54,6 +54,7 @@
         android:text="@string/string_tipodetarjeta" />
 
     <RadioGroup
+        android:id="@+id/tipoTarjeta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -127,7 +128,7 @@
             android:ems="10"
             android:hint="@string/string_mes"
             android:maxLength="2"
-            android:inputType="number"
+            android:inputType="date"
             android:importantForAutofill="no" />
 
         <EditText
@@ -138,7 +139,7 @@
             android:ems="10"
             android:hint="@string/string_anio"
             android:maxLength="4"
-            android:inputType="number"
+            android:inputType="date"
             android:importantForAutofill="no" />
     </LinearLayout>
 
@@ -175,10 +176,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/string_cargaInicial" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="15dp" />
 
     <TextView
         android:id="@+id/textoCarga"

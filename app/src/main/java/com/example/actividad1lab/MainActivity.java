@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
     CheckBox terminos; //Defino el checkbox
     Button registrar;
     TextView textoCarga;
+    RadioButton debito, credito;
+    RadioGroup tipoTarjeta;
     EditText clave, claveRep, email, tarjeta, CCV, mes, anio, CBU, aliasCBU;
-    boolean valClave, valClaveRep, valEmail, valTarjeta, valCCV, valMes, valAnio, valCBU, valAliasCBU, valCarga;
+    boolean valClave = false, valClaveRep = false, valEmail = false, valTipo=false, valTarjeta = false, valCCV = false, valMes = false, valAnio = false, valFecha = false, valCBU, valAliasCBU, valCarga = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
         clave = findViewById(R.id.password);
         claveRep = findViewById(R.id.password2);
         email = findViewById(R.id.email);
+        tipoTarjeta = findViewById(R.id.tipoTarjeta);
+        debito = findViewById(R.id.debito);
+        credito = findViewById(R.id.credito);
         tarjeta = findViewById(R.id.numeroTarjeta);
         CCV = findViewById(R.id.numeroCCV);
         mes = findViewById(R.id.mes);
@@ -59,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         registrar = findViewById(R.id.registrar);
         registrar.setEnabled(false);
 
+        //Listener cambio de texto en password 1
         clave.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -67,28 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (clave.getText().toString().length() <= 0) {
-                    clave.setError("Este es un campo obligatorio");
-                    valClave = false;
-                } else {
-                    clave.setError(null);
-                    valClave = true;
-                }
+                valClave = validacionNulo(clave);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (clave.getText().toString().length() <= 0) {
-                    clave.setError("Este es un campo obligatorio");
-                    valClave = false;
-                } else {
-                    clave.setError(null);
-                    valClave = true;
-                }
-
+                valClave = validacionNulo(clave);
             }
-        }); //Listener cambio de texto en password 1
+        });
 
+        //Listener cambio de texto en password 2
         claveRep.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -97,13 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!claveRep.getText().toString().equals(clave.getText().toString())) {
-                    claveRep.setError("Las contraseñas no coinciden");
-                    valClaveRep = false;
-                } else {
-                    claveRep.setError(null);
-                    valClaveRep = true;
-                }
+                valClaveRep = validacionNulo(claveRep);
             }
 
             @Override
@@ -116,34 +107,24 @@ public class MainActivity extends AppCompatActivity {
                     valClaveRep = true;
                 }
             }
-        }); //Listener cambio de texto en password 2
+        });
 
+        //Listener focus en password 1
         clave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { //Listener focus en password 1
+            public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (clave.getText().toString().length() <= 0) {
-                        clave.setError("Este es un campo obligatorio");
-                        valClave = false;
-                    } else {
-                        clave.setError(null);
-                        valClave = true;
-                    }
+                    valClave = validacionNulo(clave);
                 }
             }
         });
 
+        //Listener focus en password 2
         claveRep.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {  //Listener focus en password 2
+            public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (claveRep.getText().toString().length() <= 0) {
-                        claveRep.setError("Este es un campo obligatorio");
-                        valClaveRep = false;
-                    } else {
-                        claveRep.setError(null);
-                        valClaveRep = true;
-                    }
+                    valClaveRep = validacionNulo(claveRep);
                     if (!claveRep.getText().toString().equals(clave.getText().toString())) {
                         claveRep.setError("Las contraseñas no coinciden");
                         valClaveRep = false;
@@ -163,30 +144,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (clave.getText().toString().length() <= 0) {
-                    clave.setError("Este es un campo obligatorio");
-                    valClave = false;
-                } else {
-                    clave.setError(null);
-                    valClave = true;
-                }
+                valClave = validacionNulo(clave);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (email.getText().toString().length() <= 0) {
-                    email.setError("Este es un campo obligatorio");
-                    valEmail = false;
-                } else {
-                    String cantLetras = email.getText().toString().substring(email.getText().toString().indexOf("@")+1);
-                    if (email.getText().toString().trim().contains("@") && cantLetras.length() >= 3){
-                        email.setError(null);
-                        valEmail = true;
-                    } else {
-                        email.setError("Ingrese un correo electrónico válido");
-                        valEmail = false;
-                    }
-                }
+                valEmail = validacionNulo(email) && validacionEmail(email);
             }
         });
 
@@ -194,20 +157,42 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (email.getText().toString().length() <= 0) {
-                        email.setError("Este es un campo obligatorio");
-                        valEmail = false;
-                    } else {
-                        String cantLetras = email.getText().toString().substring(email.getText().toString().indexOf("@") + 1);
-                        if (email.getText().toString().trim().contains("@") && cantLetras.length() >= 3) {
-                            email.setError(null);
-                            valEmail = true;
-                        } else {
-                            email.setError("Ingrese un correo electrónico válido");
-                            valEmail = false;
-                        }
-                    }
+                    valEmail = validacionNulo(email) && validacionEmail(email);
                 }}});
+
+        debito.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    valTipo = validacionTipo(debito,credito);
+                }
+            }
+        });
+
+        debito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
+            {
+                valTipo = validacionTipo(debito,credito);
+            }
+        });
+
+        credito.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    valTipo = validacionTipo(debito,credito);
+                }
+            }
+        });
+
+        credito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
+            {
+                valTipo = validacionTipo(debito,credito);
+            }
+        });
 
         tarjeta.addTextChangedListener(new TextWatcher() {
             @Override
@@ -217,24 +202,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (tarjeta.getText().toString().length() <= 0) {
-                    tarjeta.setError("Este es un campo obligatorio");
-                    valTarjeta=false;
-                } else {
-                    tarjeta.setError(null);
-                    valTarjeta=true;
-                }
+                valTarjeta = validacionNulo(tarjeta);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (tarjeta.getText().toString().length() <= 0) {
-                    tarjeta.setError("Este es un campo obligatorio");
-                    valTarjeta=false;
-                } else {
-                    tarjeta.setError(null);
-                    valTarjeta=true;
-                }
+                valTarjeta = validacionNulo(tarjeta);
             }
         });
 
@@ -242,13 +215,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (tarjeta.getText().toString().length() <= 0) {
-                        tarjeta.setError("Este es un campo obligatorio");
-                        valTarjeta=false;
-                    } else {
-                        tarjeta.setError(null);
-                        valTarjeta=true;
-                    }
+                    valTarjeta = validacionNulo(tarjeta);
                 }}});
 
         CCV.addTextChangedListener(new TextWatcher() {
@@ -259,24 +226,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (CCV.getText().toString().length() <= 0) {
-                    CCV.setError("Este es un campo obligatorio");
-                    valCCV=false;
-                } else {
-                    CCV.setError(null);
-                    valCCV=true;
-                }
+                valCCV = validacionNulo(CCV);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (CCV.getText().toString().length() <= 0) {
-                    CCV.setError("Este es un campo obligatorio");
-                    valCCV=false;
-                } else {
-                    CCV.setError(null);
-                    valCCV=true;
-                }
+                valCCV = validacionNulo(CCV);
             }
         });
 
@@ -284,41 +239,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (CCV.getText().toString().length() <= 0) {
-                        CCV.setError("Este es un campo obligatorio");
-                        valCCV=false;
-                    } else {
-                        CCV.setError(null);
-                        valCCV=true;
-                    }
+                    valCCV = validacionNulo(CCV);
                 }}});
 
         mes.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (mes.getText().toString().length() <= 0) {
-                    mes.setError("Este es un campo obligatorio");
-                    valMes=false;
-                } else {
-                    mes.setError(null);
-                    valMes=true;
+                valMes = validacionNulo(mes) && validacionMes(mes);
                 }
-            }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (mes.getText().toString().length() <= 0) {
-                    mes.setError("Este es un campo obligatorio");
-                    valMes=false;
-                } else {
-                    mes.setError(null);
-                    valMes=true;
-                }
+                valMes = validacionNulo(mes) && validacionMes(mes);
             }
         });
 
@@ -326,13 +262,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (mes.getText().toString().length() <= 0) {
-                        mes.setError("Este es un campo obligatorio");
-                        valMes=false;
-                    } else {
-                        mes.setError(null);
-                        valMes=true;
-                    }
+                    valMes = validacionNulo(mes) && validacionMes(mes);
                 }}});
 
         anio.addTextChangedListener(new TextWatcher() {
@@ -343,24 +273,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (anio.getText().toString().length() <= 0) {
-                    anio.setError("Este es un campo obligatorio");
-                    valAnio=false;
-                } else {
-                    anio.setError(null);
-                    valAnio=true;
-                }
+                valAnio = validacionNulo(anio);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (anio.getText().toString().length() <= 0) {
-                    anio.setError("Este es un campo obligatorio");
-                    valAnio=false;
-                } else {
-                    anio.setError(null);
-                    valAnio=true;
-                }
+                valAnio = validacionNulo(anio);
             }
         });
 
@@ -368,35 +286,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (anio.getText().toString().length() <= 0) {
-                        anio.setError("Este es un campo obligatorio");
-                        valAnio=false;
-                    } else {
-                        anio.setError(null);
-                        valAnio=true;
-                       /* if(Integer.parseInt(mes.toString()) > 12){
-                            Toast toast2 = Toast.makeText(getApplicationContext(), "Fecha invalida", Toast.LENGTH_SHORT);
-                            toast2.show();
-                        }
-                        else {
-                            SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
-                            String dateInString = mes.toString() + anio.toString();
-                            Date fechaIngresada = null;
-                            {
-                                try {
-                                    fechaIngresada = formatter.parse(dateInString);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            Date date = new Date();
-                            if (fechaIngresada.compareTo(date) > 0){
-                                Toast toast1 = Toast.makeText(getApplicationContext(), "Fecha ingresada mayor a la actual", Toast.LENGTH_SHORT);
-                                toast1.show();
-                            }
-                        } */
-                    }
-                }}});
+                    valAnio = validacionNulo(anio);
+                }
+            }
+        });
 
         switchCarga.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -417,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                 int val = (i * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
                 textoCarga.setX(val);
                 textoCarga.setText(String.valueOf(i));
-                if (i > 0){
+                if (i > 0 && switchCarga.isChecked()){
                     valCarga = true;
                 }
                 else{
@@ -448,18 +341,118 @@ public class MainActivity extends AppCompatActivity {
             }
             });
 
-
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (valClave && valCarga && valClaveRep && valEmail && valTarjeta && valCCV && valMes && valAnio) {
-                    Toast toast1 = Toast.makeText(getApplicationContext(), "Registro correcto", Toast.LENGTH_SHORT);
-                    toast1.show();
+                if(mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0 ) {
+                    valFecha = validacionFecha(mes, anio);
+                }
+                valTipo = validacionTipo(debito,credito);
+                if (valClave && valClaveRep && valEmail && valTipo && valTarjeta && valCCV && valMes && valAnio && valFecha && valCarga) {
+                    Toast registroCorrecto = Toast.makeText(getApplicationContext(), "Registro correcto", Toast.LENGTH_SHORT);
+                    registroCorrecto.show();
                 } else {
-                    Toast toast2 = Toast.makeText(getApplicationContext(), "Registro incorrecto. Revise los datos ingresados", Toast.LENGTH_SHORT);
-                    toast2.show();
+                    Toast registroIncorrecto = Toast.makeText(getApplicationContext(), "Registro incorrecto. Revise los datos ingresados", Toast.LENGTH_SHORT);
+                    registroIncorrecto.show();
+                    validacionesDefault();
                 }
             }
         });
+    }
+
+    private boolean validacionNulo(EditText input){
+        boolean nulo;
+        if (input.getText().toString().length() <= 0) {
+            input.setError("Este es un campo obligatorio");
+            nulo = false;
+        } else {
+            clave.setError(null);
+            nulo = true;
+        }
+        return nulo;
+    }
+
+    private boolean validacionEmail(EditText input){
+        boolean valEmail;
+        String cantLetras = input.getText().toString().substring(input.getText().toString().indexOf("@")+1);
+        if (input.getText().toString().trim().contains("@") && cantLetras.length() >= 3){
+            input.setError(null);
+            valEmail = true;
+        } else {
+            input.setError("Ingrese un correo electrónico válido");
+            valEmail = false;
+        }
+        return valEmail;
+    }
+
+    private boolean validacionMes(EditText input){
+        boolean valMes;
+        if(Integer.parseInt(input.getText().toString()) > 12){
+            input.setError("Ingrese un mes válido.");
+            valMes=false;
+        }else{
+            input.setError(null);
+            valMes=true;
+        }
+        return valMes;
+    }
+
+    private boolean validacionFecha(EditText inputmes, EditText inputanio){
+        boolean valFecha;
+        DateFormat formato = new SimpleDateFormat("MM-yyyy");
+        String fechaIngresadaStr = inputmes.getText().toString()+"-"+inputanio.getText().toString();
+        Date fechaIngresada = null;
+        try {
+            fechaIngresada = formato.parse(fechaIngresadaStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar calActual = Calendar.getInstance();
+        Date fechaActual = new Date();
+        calActual.setTime(fechaActual);
+        calActual.add(Calendar.MONTH, 2);
+
+        Calendar calIngresada = Calendar.getInstance();
+        calIngresada.setTime(fechaIngresada);
+
+        if (calIngresada.before(calActual)){
+            inputanio.setError("La fecha de vencimiento ingresada expiró");
+            inputmes.setError("La fecha de vencimiento ingresada expiró");
+            valFecha=false;
+        } else {
+            valFecha=true;
+        }
+
+        return valFecha;
+    }
+
+    private boolean validacionTipo(RadioButton r1, RadioButton r2){
+        boolean valTipo;
+        if(r1.isChecked()) {
+            r1.setError(null);
+            r2.setError(null);
+            valTipo=true;
+        } else if (r2.isChecked()) {
+            r1.setError(null);
+            r2.setError(null);
+            valTipo = true;
+        }
+        else{
+            r2.setError("Debe seleccionar un tipo de tarjeta.");
+            valTipo=false;
+        }
+        return valTipo;
+    }
+
+    private void validacionesDefault(){
+        validacionNulo(clave);
+        validacionNulo(claveRep);
+        validacionNulo(email);
+        validacionTipo(debito,credito);
+        validacionNulo(tarjeta);
+        validacionNulo(CCV);
+        validacionNulo(mes);
+        validacionNulo(anio);
     }
 }
