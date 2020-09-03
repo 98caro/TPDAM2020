@@ -37,36 +37,38 @@ public class MainActivity extends AppCompatActivity {
     SeekBar cantidadCarga;
     CheckBox terminos;
     Button registrar;
-    TextView textoCarga;
+    TextView textoCarga, labelFecha;
     RadioButton debito, credito;
     RadioGroup tipoTarjeta;
     EditText clave, claveRep, email, tarjeta, CCV, mes, anio, CBU, aliasCBU;
     boolean valClave = false, valClaveRep = false, valEmail = false, valTipo=false, valTarjeta = false, valCCV = false, valMes = false, valAnio = false, valFecha = false, valCBU, valAliasCBU, valCarga = false;
-    TextView labelFecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        switchCarga = findViewById(R.id.cargaInicial);
-        cantidadCarga = findViewById(R.id.barraCarga);
-        terminos = findViewById(R.id.terminos);
-        registrar = findViewById(R.id.registrar);
-        textoCarga = findViewById(R.id.textoCarga);
-        clave = findViewById(R.id.password);
-        claveRep = findViewById(R.id.password2);
-        email = findViewById(R.id.email);
-        tipoTarjeta = findViewById(R.id.tipoTarjeta);
-        debito = findViewById(R.id.debito);
-        credito = findViewById(R.id.credito);
-        tarjeta = findViewById(R.id.numeroTarjeta);
-        CCV = findViewById(R.id.numeroCCV);
-        labelFecha = findViewById(R.id.labelFecha);
-        mes = findViewById(R.id.mes);
-        anio = findViewById(R.id.anio);
-        registrar = findViewById(R.id.registrar);
+        switchCarga = findViewById(R.id.cargaInicial); //Switch
+        cantidadCarga = findViewById(R.id.barraCarga);  //Barra de carga -seekbar-
+        terminos = findViewById(R.id.terminos); //Checkbox de terminos y condiciones
+        registrar = findViewById(R.id.registrar);   //Botón registrar
+        textoCarga = findViewById(R.id.textoCarga); // Label
+        clave = findViewById(R.id.password);    //Campo clave
+        claveRep = findViewById(R.id.password2); //Campo repetir clave
+        email = findViewById(R.id.email); //Campo email
+        tipoTarjeta = findViewById(R.id.tipoTarjeta);  // Radio group tipo tarjeta
+        debito = findViewById(R.id.debito); // Radio button debito
+        credito = findViewById(R.id.credito); // Radio button credito
+        tarjeta = findViewById(R.id.numeroTarjeta);  // Campo numero tarjeta
+        CCV = findViewById(R.id.numeroCCV); // Campo numero CCV
+        labelFecha = findViewById(R.id.labelFecha); // Label
+        mes = findViewById(R.id.mes); // Campo numero mes
+        anio = findViewById(R.id.anio); // Campo numero año
+
         registrar.setEnabled(false);
+        CCV.setEnabled(false);
+        mes.setEnabled(false);
+        anio.setEnabled(false);
 
         //Listener cambio de texto en password 1
         clave.addTextChangedListener(new TextWatcher() {
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 valClave = validacionNulo(clave);
             }
         });
+
         //Listener focus en password 1
         clave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -166,24 +169,21 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
                     valTipo = validacionTipo(debito,credito);
-                    if(debito.isChecked()) {
-                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                            valFecha = validacionFechaDebito(mes, anio);
-                        }
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFecha(mes, anio);
                     }
                 }
             }
         });
+
         //Listener checked en tipo debito
         debito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
             {
                 valTipo = validacionTipo(debito,credito);
-                if(debito.isChecked()) {
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaDebito(mes, anio);
-                    }
+                if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                    valFecha = validacionFecha(mes, anio);
                 }
             }
         });
@@ -194,24 +194,21 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
                     valTipo = validacionTipo(debito,credito);
-                    if(credito.isChecked()) {
-                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                            valFecha = validacionFechaCredito(mes, anio);
-                        }
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFecha(mes, anio);
                     }
                 }
             }
         });
+
         //Listener checked en tipo credito
         credito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
             {
                 valTipo = validacionTipo(debito,credito);
-                if(credito.isChecked()) {
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaCredito(mes, anio);
-                    }
+                if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                    valFecha = validacionFecha(mes, anio);
                 }
             }
         });
@@ -226,11 +223,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 valTarjeta = validacionNulo(tarjeta);
+                if(valTarjeta){
+                    CCV.setEnabled(true);
+                    mes.setEnabled(true);
+                    anio.setEnabled(true);
+                } else{
+                    CCV.setEnabled(false);
+                    mes.setEnabled(false);
+                    anio.setEnabled(false);
+                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 valTarjeta = validacionNulo(tarjeta);
+                if(valTarjeta){
+                    CCV.setEnabled(true);
+                    mes.setEnabled(true);
+                    anio.setEnabled(true);
+                } else{
+                    CCV.setEnabled(false);
+                    mes.setEnabled(false);
+                    anio.setEnabled(false);
+                }
             }
         });
         //Listener focus en tarjeta
@@ -239,13 +254,21 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     valTarjeta = validacionNulo(tarjeta);
+                    if(valTarjeta){
+                        CCV.setEnabled(true);
+                        mes.setEnabled(true);
+                        anio.setEnabled(true);
+                    } else{
+                        CCV.setEnabled(false);
+                        mes.setEnabled(false);
+                        anio.setEnabled(false);
+                    }
                 }}});
 
         //Listener cambio de texto en CCV
         CCV.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -275,45 +298,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 valMes = validacionMes(mes);
-                if(credito.isChecked()) {
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaCredito(mes, anio);
-                    }
-                } else if(debito.isChecked()){
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaDebito(mes, anio);
-                    }
+                if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                    valFecha = validacionFecha(mes, anio);
                 }
                 }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 valMes = validacionMes(mes);
-                if(credito.isChecked()) {
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaCredito(mes, anio);
-                    }
-                } else if(debito.isChecked()){
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaDebito(mes, anio);
-                    }
+                if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                    valFecha = validacionFecha(mes, anio);
                 }
             }
         });
+
         //Listener focus en mes
         mes.setOnFocusChangeListener(new View.OnFocusChangeListener() { //Listener focus en email
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     valMes = validacionMes(mes);
-                    if(credito.isChecked()) {
-                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                            valFecha = validacionFechaCredito(mes, anio);
-                        }
-                    } else if(debito.isChecked()){
-                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                            valFecha = validacionFechaDebito(mes, anio);
-                        }
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFecha(mes, anio);
                     }
                 }}});
 
@@ -327,45 +333,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 valAnio = validacionNulo(anio);
-                if(credito.isChecked()) {
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaCredito(mes, anio);
-                    }
-                } else if(debito.isChecked()){
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaDebito(mes, anio);
-                    }
+                if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                    valFecha = validacionFecha(mes, anio);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 valAnio = validacionNulo(anio);
-                if(credito.isChecked()) {
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaCredito(mes, anio);
-                    }
-                } else if(debito.isChecked()){
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaDebito(mes, anio);
-                    }
+                if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                    valFecha = validacionFecha(mes, anio);
                 }
             }
         });
+
         //Listener focus en año
         anio.setOnFocusChangeListener(new View.OnFocusChangeListener() { //Listener focus en email
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     valAnio = validacionNulo(anio);
-                    if(credito.isChecked()) {
-                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                            valFecha = validacionFechaCredito(mes, anio);
-                        }
-                    } else if(debito.isChecked()){
-                        if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                            valFecha = validacionFechaDebito(mes, anio);
-                        }
+                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                        valFecha = validacionFecha(mes, anio);
                     }
                 }
             }
@@ -397,15 +386,11 @@ public class MainActivity extends AppCompatActivity {
                 textoCarga.setText(String.valueOf(i));
                 valCarga = validacionCarga();
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
@@ -426,15 +411,8 @@ public class MainActivity extends AppCompatActivity {
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(credito.isChecked()) {
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaCredito(mes, anio);
-                    }
-                }
-                else if(debito.isChecked()){
-                    if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
-                        valFecha = validacionFechaDebito(mes, anio);
-                    }
+                if (mes.getText().toString().length() > 0 && anio.getText().toString().length() > 0) {
+                    valFecha = validacionFecha(mes, anio);
                 }
                 valCarga = validacionCarga();
                 valTipo = validacionTipo(debito,credito);
@@ -465,6 +443,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean validacionEmail(EditText input){
         boolean valEmail;
         String cantLetras = input.getText().toString().substring(input.getText().toString().indexOf("@")+1);
+
         if (input.getText().toString().trim().contains("@") && cantLetras.length() >= 3){
             input.setError(null);
             valEmail = true;
@@ -472,6 +451,7 @@ public class MainActivity extends AppCompatActivity {
             input.setError("Ingrese un correo electrónico válido");
             valEmail = false;
         }
+
         return valEmail;
     }
 
@@ -495,11 +475,12 @@ public class MainActivity extends AppCompatActivity {
         return valMes;
     }
 
-    private boolean validacionFechaCredito(EditText inputmes, EditText inputanio){
+    private boolean validacionFecha(EditText inputmes, EditText inputanio){
         boolean valFecha;
         DateFormat formato = new SimpleDateFormat("MM-yy");
         String fechaIngresadaStr = inputmes.getText().toString()+"-"+inputanio.getText().toString();
         Date fechaIngresada = null;
+
         try {
             fechaIngresada = formato.parse(fechaIngresadaStr);
         } catch (ParseException e) {
@@ -528,7 +509,8 @@ public class MainActivity extends AppCompatActivity {
 
         return valFecha;
     }
-    private boolean validacionFechaDebito(EditText inputmes, EditText inputanio) {
+
+    /*private boolean validacionFechaDebito(EditText inputmes, EditText inputanio) {
         boolean valFecha;
         DateFormat formato = new SimpleDateFormat("MM-yy");
         String fechaIngresadaStr = inputmes.getText().toString() + "-" + inputanio.getText().toString();
@@ -558,7 +540,9 @@ public class MainActivity extends AppCompatActivity {
             valFecha = true;
         }
         return valFecha;
-    }
+    }/*
+
+     */
 
     private boolean validacionTipo(RadioButton r1, RadioButton r2){
         boolean valTipo;
