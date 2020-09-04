@@ -6,220 +6,231 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <EditText
-        android:id="@+id/nombre"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="@string/string_name"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textSize="15dp" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="@string/string_password"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:textSize="15dp" />
-
-    <EditText
-        android:id="@+id/password2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="@string/string_password2"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:textSize="15dp" />
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="@string/string_email"
-        android:importantForAutofill="no"
-        android:inputType="textEmailAddress"
-        android:textSize="15dp" />
-
-    <TextView
-        android:id="@+id/labelTarjeta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/string_tipodetarjeta"
-        android:textSize="12dp" />
-
-    <RadioGroup
-        android:id="@+id/tipoTarjeta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/debito"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="@string/string_debito"
-            android:textSize="13dp" />
-
-        <RadioButton
-            android:id="@+id/credito"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="@string/string_credito"
-            android:textSize="13dp" />
-
-    </RadioGroup>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/numeroTarjeta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:ems="10"
-            android:hint="@string/string_tarjeta"
-            android:importantForAutofill="no"
-            android:inputType="number"
-            android:maxLength="18"
-            android:textSize="15dp" />
-
-        <EditText
-            android:id="@+id/numeroCCV"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:ems="10"
-            android:hint="@string/string_CCV"
-            android:importantForAutofill="no"
-            android:inputType="number"
-            android:maxLength="3"
-            android:textSize="15dp" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:ems="10"
+                android:hint="@string/string_name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textSize="15dp" />
 
-    <TextView
-        android:id="@+id/labelFecha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/string_fecha"
-        android:textSize="12dp" />
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:ems="10"
+                android:hint="@string/string_password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:textSize="15dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+            <EditText
+                android:id="@+id/password2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:ems="10"
+                android:hint="@string/string_password2"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:textSize="15dp" />
 
-        <EditText
-            android:id="@+id/mes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:textSize="15dp"
-            android:hint="@string/string_mes"
-            android:importantForAutofill="no"
-            android:inputType="number"
-            android:maxLength="2" />
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:ems="10"
+                android:hint="@string/string_email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:textSize="15dp" />
 
-        <EditText
-            android:id="@+id/anio"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:textSize="15dp"
-            android:hint="@string/string_anio"
-            android:importantForAutofill="no"
-            android:inputType="number"
-            android:maxLength="2" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/labelTarjeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/string_tipodetarjeta"
+                android:textSize="12dp" />
 
-    <EditText
-        android:id="@+id/CBU"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="@string/string_cbu"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="22"
-        android:textSize="15dp" />
+            <RadioGroup
+                android:id="@+id/tipoTarjeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/aliasCBU"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="@string/string_aliascbu"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:maxLength="20"
-        android:textSize="15dp" />
+                <RadioButton
+                    android:id="@+id/debito"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:text="@string/string_debito"
+                    android:textSize="13dp" />
 
-    <Switch
-        android:id="@+id/cargaInicial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:text="@string/string_cargaInicial"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                <RadioButton
+                    android:id="@+id/credito"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:text="@string/string_credito"
+                    android:textSize="13dp" />
 
-    <TextView
-        android:id="@+id/textoCarga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:text="@string/string_carga"
-        android:textSize="12dp"
-        android:visibility="gone" />
+            </RadioGroup>
 
-    <SeekBar
-        android:id="@+id/barraCarga"
-        android:layout_width="365dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:max="1500"
-        android:visibility="gone"
-        tools:visibility="gone" />
+            <LinearLayout
+                android:id="@+id/layoutTarjeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/terminos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:text="@string/string_terminos"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                <EditText
+                    android:id="@+id/numeroTarjeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:ems="10"
+                    android:hint="@string/string_tarjeta"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="18"
+                    android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/registrar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:background="#FFAA80"
-        android:text="@string/string_registrar" />
+                <EditText
+                    android:id="@+id/numeroCCV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:ems="10"
+                    android:hint="@string/string_CCV"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textSize="15dp" />
 
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/labelFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/string_fecha"
+                android:textSize="12dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutFecha"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/mes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="@string/string_mes"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/anio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/string_anio"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/CBU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:ems="10"
+                android:hint="@string/string_cbu"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:maxLength="22"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/aliasCBU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:ems="10"
+                android:hint="@string/string_aliascbu"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:maxLength="20"
+                android:textSize="15dp" />
+
+            <Switch
+                android:id="@+id/cargaInicial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="@string/string_cargaInicial"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:id="@+id/textoCarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="@string/string_carga"
+                android:textSize="12dp"
+                android:visibility="gone" />
+
+            <SeekBar
+                android:id="@+id/barraCarga"
+                android:layout_width="365dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:max="1500"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+            <CheckBox
+                android:id="@+id/terminos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="@string/string_terminos"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <Button
+                android:id="@+id/registrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="#FFAA80"
+                android:text="@string/string_registrar" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

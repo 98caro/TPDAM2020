@@ -6,9 +6,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     SeekBar cantidadCarga;
     CheckBox terminos;
     Button registrar;
-    TextView textoCarga, labelFecha;
+    TextView textoCarga, labelFecha, labelTarjeta;
     RadioButton debito, credito;
     RadioGroup tipoTarjeta;
     EditText clave, claveRep, email, tarjeta, CCV, mes, anio, CBU, aliasCBU;
@@ -61,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
         credito = findViewById(R.id.credito); // Radio button credito
         tarjeta = findViewById(R.id.numeroTarjeta);  // Campo numero tarjeta
         CCV = findViewById(R.id.numeroCCV); // Campo numero CCV
-        labelFecha = findViewById(R.id.labelFecha); // Label
+        labelFecha = findViewById(R.id.labelFecha); // Label fecha
         mes = findViewById(R.id.mes); // Campo numero mes
         anio = findViewById(R.id.anio); // Campo numero año
+        labelTarjeta = findViewById(R.id.labelTarjeta); // Label tipo de tarjeta (radio group)
 
         registrar.setEnabled(false);
         CCV.setEnabled(false);
@@ -417,68 +415,66 @@ public class MainActivity extends AppCompatActivity {
                 valCarga = validacionCarga();
                 valTipo = validacionTipo(debito,credito);
                 if (valClave && valClaveRep && valEmail && valTipo && valTarjeta && valCCV && valMes && valAnio && valFecha && valCarga) {
-                    Toast registroCorrecto = Toast.makeText(getApplicationContext(), "Registro correcto", Toast.LENGTH_SHORT);
-                    registroCorrecto.show();
+                    Toast.makeText(getApplicationContext(), "Registro correcto", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast registroIncorrecto = Toast.makeText(getApplicationContext(), "Registro incorrecto. Revise los datos ingresados", Toast.LENGTH_SHORT);
-                    registroIncorrecto.show();
+                    Toast.makeText(getApplicationContext(), "Registro incorrecto", Toast.LENGTH_LONG).show();
                     validacionesDefault();
                 }
             }
         });
     }
 
-    private boolean validacionNulo(EditText input){
-        boolean nulo;
-        if (input.getText().toString().length() <= 0) {
-            input.setError("Este es un campo obligatorio");
-            nulo = false;
+    private boolean validacionNulo(EditText campoIngresado){
+        boolean valNulo;
+        if (campoIngresado.getText().toString().length() <= 0) {
+            campoIngresado.setError("Este es un campo obligatorio");
+            valNulo = false;
         } else {
-            input.setError(null);
-            nulo = true;
+            campoIngresado.setError(null);
+            valNulo = true;
         }
-        return nulo;
+        return valNulo;
     }
 
-    private boolean validacionEmail(EditText input){
+    private boolean validacionEmail(EditText textoEmail){
         boolean valEmail;
-        String cantLetras = input.getText().toString().substring(input.getText().toString().indexOf("@")+1);
+        String cantLetras = textoEmail.getText().toString().substring(textoEmail.getText().toString().indexOf("@")+1); //Obtengo lo que hay después de la arroba
 
-        if (input.getText().toString().trim().contains("@") && cantLetras.length() >= 3){
-            input.setError(null);
+        if (textoEmail.getText().toString().trim().contains("@") && cantLetras.length() >= 3){
+            textoEmail.setError(null);
             valEmail = true;
         } else {
-            input.setError("Ingrese un correo electrónico válido");
+            textoEmail.setError("Ingrese un correo electrónico válido");
             valEmail = false;
         }
 
         return valEmail;
     }
 
-    private boolean validacionMes(EditText input) {
+    private boolean validacionMes(EditText textoMes) {
         boolean valMes;
-        if (input.getText().toString().length() <= 0) {
-            input.setError("Este es un campo obligatorio");
+        if (textoMes.getText().toString().length() <= 0) {
+            textoMes.setError("Este es un campo obligatorio");
             valMes = false;
         } else {
-            int Min = 1;
-            int Max = 12;
-            int inputToInt = Integer.parseInt(input.getText().toString());
-            if (inputToInt >= Min && inputToInt <= Max) {
+            int minimo = 1;
+            int maximo = 12;
+            int enteroMes = Integer.parseInt(textoMes.getText().toString());
+            if (enteroMes >= minimo && enteroMes <= maximo) {
                 valMes=true;
             } else {
-                input.setError("El número debe encontrarse entre 1 y 12");
-                input.setText(input.getText().toString().substring(0, input.getText().toString().length()-1));
+                textoMes.setError("El número debe encontrarse entre 1 y 12");
+                textoMes.setText(textoMes.getText().toString().substring(0, textoMes.getText().toString().length()-1));
                 valMes = false;
             }
         }
         return valMes;
     }
 
-    private boolean validacionFecha(EditText inputmes, EditText inputanio){
+    private boolean validacionFecha(EditText textoMes, EditText textoAño){
         boolean valFecha;
         DateFormat formato = new SimpleDateFormat("MM-yy");
-        String fechaIngresadaStr = inputmes.getText().toString()+"-"+inputanio.getText().toString();
+        String fechaIngresadaStr = textoMes.getText().toString()+"-"+textoAño.getText().toString();
         Date fechaIngresada = null;
 
         try {
@@ -502,7 +498,7 @@ public class MainActivity extends AppCompatActivity {
             valFecha=false;
         } else {
             labelFecha.setText(R.string.string_fecha);
-            labelFecha.setTextColor(Color.BLACK);
+            labelFecha.setTextColor(Color.parseColor("#808080"));
             labelFecha.setTypeface(null, Typeface.NORMAL);
             valFecha=true;
         }
@@ -510,53 +506,23 @@ public class MainActivity extends AppCompatActivity {
         return valFecha;
     }
 
-    /*private boolean validacionFechaDebito(EditText inputmes, EditText inputanio) {
-        boolean valFecha;
-        DateFormat formato = new SimpleDateFormat("MM-yy");
-        String fechaIngresadaStr = inputmes.getText().toString() + "-" + inputanio.getText().toString();
-        Date fechaIngresada = null;
-        try {
-            fechaIngresada = formato.parse(fechaIngresadaStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Calendar calActual = Calendar.getInstance();
-        Date fechaActual = new Date();
-        calActual.setTime(fechaActual);
-
-        Calendar calIngresada = Calendar.getInstance();
-        calIngresada.setTime(fechaIngresada);
-
-        if (calIngresada.before(calActual)) {
-            labelFecha.setText("La fecha de vencimiento debe ser superior a la fecha actual.");
-            labelFecha.setTextColor(Color.RED);
-            labelFecha.setTypeface(null, Typeface.BOLD);
-            valFecha = false;
-        } else {
-            labelFecha.setText(R.string.string_fecha);
-            labelFecha.setTextColor(Color.BLACK);
-            labelFecha.setTypeface(null, Typeface.NORMAL);
-            valFecha = true;
-        }
-        return valFecha;
-    }/*
-
-     */
-
-    private boolean validacionTipo(RadioButton r1, RadioButton r2){
+    private boolean validacionTipo(RadioButton debitoRB, RadioButton creditoRB){
         boolean valTipo;
-        if(r1.isChecked()) {
-            r1.setError(null);
-            r2.setError(null);
+        if(debitoRB.isChecked()) {
+            labelTarjeta.setText(R.string.string_tipodetarjeta);
+            labelTarjeta.setTextColor(Color.parseColor("#808080"));
+            labelTarjeta.setTypeface(null, Typeface.NORMAL);
             valTipo=true;
-        } else if (r2.isChecked()) {
-            r1.setError(null);
-            r2.setError(null);
+        } else if (creditoRB.isChecked()) {
+            labelTarjeta.setText(R.string.string_tipodetarjeta);
+            labelTarjeta.setTextColor(Color.parseColor("#808080"));
+            labelTarjeta.setTypeface(null, Typeface.NORMAL);
             valTipo = true;
         }
         else{
-            r2.setError("Debe seleccionar un tipo de tarjeta.");
+            labelTarjeta.setText("Debe seleccionar un tipo de tarjeta.");
+            labelTarjeta.setTextColor(Color.RED);
+            labelTarjeta.setTypeface(null, Typeface.BOLD);
             valTipo=false;
         }
         return valTipo;
