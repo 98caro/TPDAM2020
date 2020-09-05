@@ -427,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean validacionNulo(EditText campoIngresado){
         boolean valNulo;
         if (campoIngresado.getText().toString().length() <= 0) {
-            campoIngresado.setError("Este es un campo obligatorio");
+            campoIngresado.setError("Este campo es obligatorio");
             valNulo = false;
         } else {
             campoIngresado.setError(null);
@@ -454,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean validacionMes(EditText textoMes) {
         boolean valMes;
         if (textoMes.getText().toString().length() <= 0) {
-            textoMes.setError("Este es un campo obligatorio");
+            textoMes.setError("Este campo es obligatorio");
             valMes = false;
         } else {
             int minimo = 1;
