@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     Switch switchCarga;
     SeekBar cantidadCarga;
     CheckBox terminos;
-    Button registrar;
+    Button registrar; //probando commit
     TextView textoCarga, labelFecha, labelTarjeta;
     RadioButton debito, credito;
     RadioGroup tipoTarjeta;
