@@ -30,7 +30,7 @@ import java.util.Date;
 import static java.time.LocalDate.now;
 
 public class MainActivity extends AppCompatActivity {
-    Switch switchCarga;
+    Switch switchCarga; //comentario de diego.
     SeekBar cantidadCarga;
     CheckBox terminos;
     Button registrar;
